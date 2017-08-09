@@ -1,11 +1,21 @@
 odoo:
-  image: odoo
+  image: odoo:10.0
   ports:
     - "8069:8069"
   links:
     - db
+  volumes:
+    - odoo-web-data:/var/lib/odoo
+    - ./config:/etc/odoo
+    - ./addons:/mnt/extra-addons    
 db:
   image: postgres
   environment:
     - POSTGRES_USER=odoo
-    - POSTGRES_PASSWORD=odoo
+    - POSTGRES_PASSWORD=odooDBArjr2407$
+    - PGDATA=/var/lib/postgresql/data/pgdata
+  volumes:
+    - odoo-db-data:/var/lib/postgresql/data/pgdata
+volumes:
+  odoo-web-data: '/srv/odoo/web_data'
+  odoo-db-data: '/srv/odoo/postgresql'
