@@ -1,6 +1,6 @@
 .catalog:
   name: "Odoo"
-  version: v0.1-educaas
+  version: v0.2-kyeeh
   description: "ERP management powered by Odoo"
   uuid: odoo-0
   questions:
