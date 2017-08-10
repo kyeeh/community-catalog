@@ -23,5 +23,5 @@ services:
     labels:
       io.rancher.scheduler.affinity:host_label: type=database
 volumes:
-  odoo-web-data: /srv/odoo/web_data
-  odoo-db-data: /srv/odoo/pg_data
+  odoo-web-data:
+  odoo-db-data:
