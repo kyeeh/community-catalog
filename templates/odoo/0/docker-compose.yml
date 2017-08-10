@@ -1,18 +1,30 @@
-odoo:
-  image: odoo
-  ports:
-    - "8069:8069"
-  links:
-    - db
-  volumes:
-    - /srv/odoo/web_data:/var/lib/odoo
-    - /srv/odoo/web_data/config:/etc/odoo
-    - /srv/odoo/web_data/addons:/mnt/extra-addons    
-db:
-  image: postgres
-  environment:
-    - POSTGRES_USER=odoo
-    - POSTGRES_PASSWORD=odooDBArjr2407$
-    - PGDATA=/var/lib/postgresql/data/pgdata
-  volumes:
-    - /srv/odoo/postgresql:/var/lib/postgresql/data/pgdata
+version: '2'
+services:
+  odoo:
+    cap_add:
+    - CHOWN
+    image: odoo
+    volumes:
+    - odoo-web-data:/var/lib/odoo
+    - ./config:/etc/odoo
+    - ./addons:/mnt/extra-addons
+    links:
+    - db:db
+    ports:
+    - 8069:8069/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: type=application
+      io.rancher.container.hostname_override: container_name
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: odooRJR2407$
+      POSTGRES_USER: odoo
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+    - odoo-db-data:/var/lib/postgresql/data/pgdata:rw
+    labels:
+      io.rancher.scheduler.affinity:host_label: type=database
+volumes:
+  odoo-web-data: /srv/odoo/web_data
+  odoo-db-data: /srv/odoo/pg_data
