@@ -1,8 +1,6 @@
 version: '2'
 services:
   odoo:
-    cap_add:
-    - CHOWN
     image: odoo
     volumes:
     - odoo-web-data:/var/lib/odoo
@@ -14,7 +12,6 @@ services:
     - 8069:8069/tcp
     labels:
       io.rancher.scheduler.affinity:host_label: type=application
-      io.rancher.container.hostname_override: container_name
   db:
     image: postgres
     environment:
